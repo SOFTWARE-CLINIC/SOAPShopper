@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/stockquote" xmlns="http://example.com/stockquote"
+  elementFormDefault="qualified">
+
+  <xs:element name="TradePriceRQ">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="tickerSymbol" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="TradePriceRS">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="price" type="xs:float" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

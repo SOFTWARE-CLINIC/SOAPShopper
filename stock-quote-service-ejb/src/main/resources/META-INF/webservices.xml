@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webservices xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/javaee_web_services_1_2.xsd"
+             version="1.2">
+    <webservice-description>
+        <webservice-description-name>Stock Quote</webservice-description-name>
+        <port-component>
+            <port-component-name>StockQuotePort</port-component-name>
+            <wsdl-port xmlns:ex="http://example.com/stockquote">ex:StockQuotePort</wsdl-port>
+            <service-endpoint-interface>com.example.stockquote.StockQuotePortType</service-endpoint-interface>
+            <service-impl-bean>
+                <ejb-link>StockQuote</ejb-link>
+            </service-impl-bean>
+        </port-component>
+    </webservice-description>
+</webservices>

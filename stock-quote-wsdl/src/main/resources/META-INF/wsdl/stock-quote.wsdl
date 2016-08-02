@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+ | A WSDL document defines services as collections of network endpoints, or ports. In WSDL, the abstract definition of
+ | endpoints and messages is separated from their concrete network deployment or data format bindings. This allows the
+ | reuse of abstract definitions: messages, which are abstract descriptions of the data being exchanged, and port types
+ | which are abstract collections of operations. The concrete protocol and data format specifications for a particular
+ | port type constitutes a reusable binding. A port is defined by associating a network address with a reusable
+ | binding, and a collection of ports define a service. Hence, a WSDL document uses the following elements in the
+ | definition of network services:
+ |
+ | Types     - a container for data type definitions using some type system (such as XSD).
+ | Message   - an abstract, typed definition of the data being communicated.
+ | Operation - an abstract description of an action supported by the service.
+ | Port Type - an abstract set of operations supported by one or more endpoints.
+ | Binding   - a concrete protocol and data format specification for a particular port type.
+ | Port      - a single endpoint defined as a combination of a binding and a network address.
+ | Service   - a collection of related endpoints.
+ |-->
+<definitions name="StockQuoteService" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/stockquote" xmlns:tns="http://example.com/stockquote"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <xs:schema targetNamespace="http://example.com/stockquote">
+      <xs:include schemaLocation="stock-quote.xsd" />
+    </xs:schema>
+  </types>
+
+  <message name="GetLastTradePriceInput">
+    <part name="body" element="tns:TradePriceRQ" />
+  </message>
+
+  <message name="GetLastTradePriceOutput">
+    <part name="body" element="tns:TradePriceRS" />
+  </message>
+
+  <portType name="StockQuotePortType">
+    <operation name="GetLastTradePrice">
+      <input message="tns:GetLastTradePriceInput" />
+      <output message="tns:GetLastTradePriceOutput" />
+    </operation>
+  </portType>
+
+  <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetLastTradePrice">
+      <soap:operation soapAction="tns:GetLastTradePrice" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+
+  <service name="StockQuoteService">
+    <documentation>
+      An example service providing stock quotes. The service supports a single operation called GetLastTradePrice,
+      which is deployed using the SOAP 1.1 protocol over HTTP. The request takes a ticker symbol of type string,
+      and returns the price as a float.
+    </documentation>
+    <port name="StockQuotePort" binding="tns:StockQuoteSoapBinding">
+      <soap:address location="/stock-quote" />
+    </port>
+  </service>
+
+</definitions>
