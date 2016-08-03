@@ -11,22 +11,19 @@ import com.example.stockquote.TradePriceRQ;
 import com.example.stockquote.TradePriceRS;
 import com.github.danielpacak.soa.stockquote.repository.StockQuoteRepository;
 
-/**
- * Tests for {@link StockQuote}.
- */
 public class StockQuoteTest {
 
-  @Test
-  public void testGetLastTradePrice() {
-    StockQuoteRepository repository = mock(StockQuoteRepository.class);
-    ObjectFactory of = new ObjectFactory();
-    TradePriceRQ request = of.createTradePriceRQ();
-    request.setTickerSymbol("GOOG");
-    given(repository.getLastTradePrice("GOOG")).willReturn(6.9f);
+    @Test
+    public void testGetLastTradePrice() {
+        StockQuoteRepository repository = mock(StockQuoteRepository.class);
+        ObjectFactory of = new ObjectFactory();
+        TradePriceRQ request = of.createTradePriceRQ();
+        request.setTickerSymbol("GOOG");
+        given(repository.getLastTradePrice("GOOG")).willReturn(6.9f);
 
-    StockQuote stockQuote = new StockQuote(repository);
-    TradePriceRS response = stockQuote.getLastTradePrice(request);
-    assertEquals(6.9f, response.getPrice(), 0.01);
-  }
+        StockQuote stockQuote = new StockQuote(repository);
+        TradePriceRS response = stockQuote.getLastTradePrice(request);
+        assertEquals(6.9f, response.getPrice(), 0.01);
+    }
 
 }

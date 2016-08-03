@@ -12,29 +12,29 @@ import com.github.danielpacak.soa.stockquote.repository.StockQuoteRepository;
 import com.github.danielpacak.soa.stockquote.repository.memory.InMemoryStockQuoteRepository;
 
 @WebService(targetNamespace = "http://example.com/stockquote",
-    endpointInterface = "com.example.stockquote.StockQuotePortType",
-    wsdlLocation = "/stock-quote.wsdl")
+        endpointInterface = "com.example.stockquote.StockQuotePortType",
+        wsdlLocation = "/META-INF/wsdl/stock-quote.wsdl")
 public class StockQuote implements StockQuotePortType {
 
-  @Resource
-  private WebServiceContext context;
+    @Resource
+    private WebServiceContext context;
 
-  private StockQuoteRepository repository;
+    private StockQuoteRepository repository;
 
-  public StockQuote(StockQuoteRepository repository) {
-    this.repository = repository;
-  }
+    public StockQuote(StockQuoteRepository repository) {
+        this.repository = repository;
+    }
 
-  public StockQuote() {
-    this(new InMemoryStockQuoteRepository());
-  }
+    public StockQuote() {
+        this(new InMemoryStockQuoteRepository());
+    }
 
-  @Override
-  public TradePriceRS getLastTradePrice(TradePriceRQ request) {
-    ObjectFactory of = new ObjectFactory();
-    TradePriceRS response = of.createTradePriceRS();
-    response.setPrice(repository.getLastTradePrice(request.getTickerSymbol()));
-    return response;
-  }
+    @Override
+    public TradePriceRS getLastTradePrice(TradePriceRQ request) {
+        ObjectFactory of = new ObjectFactory();
+        TradePriceRS response = of.createTradePriceRS();
+        response.setPrice(repository.getLastTradePrice(request.getTickerSymbol()));
+        return response;
+    }
 
 }

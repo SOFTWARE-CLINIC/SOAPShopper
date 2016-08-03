@@ -18,34 +18,34 @@ import com.github.danielpacak.soa.stockquote.repository.memory.InMemoryStockQuot
 
 public class StockQuotePublisher {
 
-  public static void main(String[] args) {
-    new StockQuotePublisher().publish();
-  }
-
-  public void publish() {
-    ObjectFactory objectFactory = new ObjectFactory();
-    StockQuoteRepository repository = new InMemoryStockQuoteRepository();
-    StockQuote stockQuote = new StockQuote(objectFactory, repository);
-    Endpoint endpoint = Endpoint.create(stockQuote);
-    Binding binding = endpoint.getBinding();
-    List<Handler> handlerChain = new LinkedList<Handler>();
-//    handlerChain.add(new ValidateCredentialsHandler());
-    binding.setHandlerChain(handlerChain);
-
-    List<Source> metadata = new ArrayList<Source>(1);
-    metadata.add(getWsdlAsSource("/META-INF/wsdl/stock-quote.wsdl"));
-    endpoint.setMetadata(metadata);
-
-    endpoint.publish("http://localhost:8680/stock-quote");
-  }
-
-  private Source getWsdlAsSource(String classPath) {
-    URL wsdlLocation = getClass().getResource(classPath);
-    if (wsdlLocation == null) {
-      throw new IllegalArgumentException("Cannot find WSDL under the class path [" + classPath + "]");
+    public static void main(String[] args) {
+        new StockQuotePublisher().publish();
     }
-    InputStream wsdlStream = getClass().getResourceAsStream(classPath);
-    return new StreamSource(wsdlStream, wsdlLocation.toExternalForm());
-  }
+
+    public void publish() {
+        ObjectFactory objectFactory = new ObjectFactory();
+        StockQuoteRepository repository = new InMemoryStockQuoteRepository();
+        StockQuote stockQuote = new StockQuote(objectFactory, repository);
+        Endpoint endpoint = Endpoint.create(stockQuote);
+        Binding binding = endpoint.getBinding();
+        List<Handler> handlerChain = new LinkedList<Handler>();
+        handlerChain.add(new ValidateCredentialsHandler());
+        binding.setHandlerChain(handlerChain);
+
+        List<Source> metadata = new ArrayList<Source>(1);
+        metadata.add(getWsdlAsSource("/META-INF/wsdl/stock-quote.wsdl"));
+        endpoint.setMetadata(metadata);
+
+        endpoint.publish("http://localhost:8680/stock-quote");
+    }
+
+    private Source getWsdlAsSource(String classPath) {
+        URL wsdlLocation = getClass().getResource(classPath);
+        if (wsdlLocation == null) {
+            throw new IllegalArgumentException("Cannot find WSDL under the class path [" + classPath + "]");
+        }
+        InputStream wsdlStream = getClass().getResourceAsStream(classPath);
+        return new StreamSource(wsdlStream, wsdlLocation.toExternalForm());
+    }
 
 }

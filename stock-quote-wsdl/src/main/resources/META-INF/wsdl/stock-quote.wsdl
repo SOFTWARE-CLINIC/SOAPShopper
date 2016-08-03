@@ -16,52 +16,53 @@
  | Port      - a single endpoint defined as a combination of a binding and a network address.
  | Service   - a collection of related endpoints.
  |-->
-<definitions name="StockQuoteService" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/stockquote" xmlns:tns="http://example.com/stockquote"
-  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<definitions name="StockQuoteService" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://example.com/stockquote" xmlns:tns="http://example.com/stockquote"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
 
-  <types>
-    <xs:schema targetNamespace="http://example.com/stockquote">
-      <xs:include schemaLocation="stock-quote.xsd" />
-    </xs:schema>
-  </types>
+    <types>
+        <xs:schema targetNamespace="http://example.com/stockquote">
+            <xs:include schemaLocation="stock-quote.xsd"/>
+        </xs:schema>
+    </types>
 
-  <message name="GetLastTradePriceInput">
-    <part name="body" element="tns:TradePriceRQ" />
-  </message>
+    <message name="GetLastTradePriceInput">
+        <part name="body" element="tns:TradePriceRQ"/>
+    </message>
 
-  <message name="GetLastTradePriceOutput">
-    <part name="body" element="tns:TradePriceRS" />
-  </message>
+    <message name="GetLastTradePriceOutput">
+        <part name="body" element="tns:TradePriceRS"/>
+    </message>
 
-  <portType name="StockQuotePortType">
-    <operation name="GetLastTradePrice">
-      <input message="tns:GetLastTradePriceInput" />
-      <output message="tns:GetLastTradePriceOutput" />
-    </operation>
-  </portType>
+    <portType name="StockQuotePortType">
+        <operation name="GetLastTradePrice">
+            <input message="tns:GetLastTradePriceInput"/>
+            <output message="tns:GetLastTradePriceOutput"/>
+        </operation>
+    </portType>
 
-  <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="GetLastTradePrice">
-      <soap:operation soapAction="tns:GetLastTradePrice" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-  </binding>
+    <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetLastTradePrice">
+            <soap:operation soapAction="tns:GetLastTradePrice"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
 
-  <service name="StockQuoteService">
-    <documentation>
-      An example service providing stock quotes. The service supports a single operation called GetLastTradePrice,
-      which is deployed using the SOAP 1.1 protocol over HTTP. The request takes a ticker symbol of type string,
-      and returns the price as a float.
-    </documentation>
-    <port name="StockQuotePort" binding="tns:StockQuoteSoapBinding">
-      <soap:address location="/stock-quote" />
-    </port>
-  </service>
+    <service name="StockQuoteService">
+        <documentation>
+            An example service providing stock quotes. The service supports a single operation called GetLastTradePrice,
+            which is deployed using the SOAP 1.1 protocol over HTTP. The request takes a ticker symbol of type string,
+            and returns the price as a float.
+        </documentation>
+        <port name="StockQuotePort" binding="tns:StockQuoteSoapBinding">
+            <soap:address location="/stock-quote"/>
+        </port>
+    </service>
 
 </definitions>
