@@ -1,5 +1,8 @@
 # Stock Quote
 
+[![Build Status](https://travis-ci.org/SOFTWARE-CLINIC/soa-seed-stock-quote.svg?branch=master)](https://travis-ci.org/SOFTWARE-CLINIC/soa-seed-stock-quote)
+[![Dependency Status](https://www.versioneye.com/user/projects/57a18e333d8eb6004f9bcf2a/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a18e333d8eb6004f9bcf2a)
+
 ```xml
 <?xml version="1.0"?>
 <definitions name="StockQuoteService" targetNamespace="http://example.com/stockquote" xmlns:tns="http://example.com/stockquote"
