@@ -11,21 +11,23 @@ import com.example.stockquote.TradePriceRS;
 import com.github.danielpacak.soa.stockquote.repository.StockQuoteRepository;
 import com.github.danielpacak.soa.stockquote.repository.memory.InMemoryStockQuoteRepository;
 
-@WebService(targetNamespace = "http://example.com/stockquote",
+@WebService(portName = "StockQuotePort",
+        serviceName = "StockQuoteService",
+        targetNamespace = "http://example.com/stockquote",
         endpointInterface = "com.example.stockquote.StockQuotePortType",
         wsdlLocation = "/META-INF/wsdl/stock-quote.wsdl")
-public class StockQuote implements StockQuotePortType {
+public class StockQuoteBean implements StockQuotePortType {
 
     @Resource
     private WebServiceContext context;
 
     private StockQuoteRepository repository;
 
-    public StockQuote(StockQuoteRepository repository) {
+    public StockQuoteBean(StockQuoteRepository repository) {
         this.repository = repository;
     }
 
-    public StockQuote() {
+    public StockQuoteBean() {
         this(new InMemoryStockQuoteRepository());
     }
 

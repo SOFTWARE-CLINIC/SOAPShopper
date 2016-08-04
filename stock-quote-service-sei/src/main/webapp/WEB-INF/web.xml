@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>StockQuote</servlet-name>
-        <servlet-class>com.github.danielpacak.soa.stockquote.service.StockQuote</servlet-class>
+        <servlet-class>com.github.danielpacak.soa.stockquote.service.StockQuoteBean</servlet-class>
     </servlet>
 
     <servlet-mapping>

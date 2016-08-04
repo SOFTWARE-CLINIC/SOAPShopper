@@ -11,7 +11,7 @@ import com.example.stockquote.TradePriceRQ;
 import com.example.stockquote.TradePriceRS;
 import com.github.danielpacak.soa.stockquote.repository.StockQuoteRepository;
 
-public class StockQuoteTest {
+public class StockQuoteBeanTest {
 
     @Test
     public void testGetLastTradePrice() {
@@ -21,7 +21,7 @@ public class StockQuoteTest {
         request.setTickerSymbol("GOOG");
         given(repository.getLastTradePrice("GOOG")).willReturn(6.9f);
 
-        StockQuote stockQuote = new StockQuote(repository);
+        StockQuoteBean stockQuote = new StockQuoteBean(repository);
         TradePriceRS response = stockQuote.getLastTradePrice(request);
         assertEquals(6.9f, response.getPrice(), 0.01);
     }

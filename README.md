@@ -1,6 +1,6 @@
 # soa-seed-stock-quote
 
-> Demonstrates different ways to implement the same thing, i.e. a JAX-WS compliant SOAP Web Service in Java.
+> Demonstrates different ways to implement the same thing, i.e. a JAX-WS compliant SOAP Web Service in Java
 
 [![Build Status](https://travis-ci.org/SOFTWARE-CLINIC/soa-seed-stock-quote.svg?branch=master)](https://travis-ci.org/SOFTWARE-CLINIC/soa-seed-stock-quote)
 [![Dependency Status](https://www.versioneye.com/user/projects/57a18e333d8eb6004f9bcf2a/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a18e333d8eb6004f9bcf2a)
@@ -77,10 +77,12 @@ conforms to the WSDL contract is to use a *service endpoint interface* (SEI). A 
 `@WebService.endpointInterface` attribute, as shown in the example below.
 
 ```java
-@WebService(targetNamespace = "http://example.com/stockquote",
+@WebService(portName = "StockQuotePort",
+    serviceName = "StockQuoteService",
+    targetNamespace = "http://example.com/stockquote",
     endpointInterface = "com.example.stockquote.StockQuotePortType",
     wsdlLocation = "/META-INF/wsdl/stock-quote.wsdl")
-public class StockQuote implements StockQuotePortType {
+public class StockQuoteBean implements StockQuotePortType {
 
   @Resource
   private WebServiceContext context;
@@ -93,9 +95,9 @@ public class StockQuote implements StockQuotePortType {
 }
 ```
 
-The class `StockQuote`, show in the example above, implements the SEI `StockQuotePortType`. In the terminology of
-WS-Metadata, `StockQuote` is a *service implementation bean* (SIB). A SIB contains the business logic of a Web service.
-It must be annotated with either `@WebService` or `@WebServiceProvider`.
+The class `StockQuoteBean`, shown in the example above, implements the SEI `StockQuotePortType`. In the terminology of
+WS-Metadata, `StockQuoteBean` is a *service implementation bean* (SIB). A SIB contains the business logic of a Web
+service. It must be annotated with either `@WebService` or `@WebServiceProvider`.
 
 Another thing to notice is the *dependency injection* defined by the `@Resource` annotation.
 The `javax.xml.ws.WebServiceContext` interface makes it possible for a SIB to access contextual information pertaining
@@ -104,6 +106,7 @@ This enables the SIB to access the results of processing that took place in the 
 for the user who sent the message).
 
 The following example shows the `StockQuotePortType` SEI that has been generated from the WSDL.
+
 ```java
 @WebService(name = "StockQuotePortType", targetNamespace = "http://example.com/stockquote")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
@@ -118,6 +121,10 @@ public interface StockQuotePortType {
 
 }
 ```
+
+The [stock-quote-service-sei](/stock-quote-service-sei) module defines the `StockQuoteBean` SIB. After deployment the
+Web service is available at [http://localhost:7001/stock-quote-service-sei/stock-quote](http://localhost:7001/stock-quote-service-sei/stock-quote)
+(see the mapping in `web.xml`).
 
 ## Providers and XML Processing without JAXB
 
@@ -136,7 +143,7 @@ http://localhost:7001/stock-quote-service-provider/stock-quote-provider
 
 ## Java SE Deployment with `javax.xml.ws.Endpoint`
 
-The [stock-quote-service-javase](/stock-quote-service-javase) module contains the `StockQuotePublisher` class
+The [stock-quote-service-javase](/stock-quote-service-javase) module defines the `StockQuotePublisher` class
 which is a Java SE application that publishes the Stock Quote Web Service at
 [http://localhost:8680/stock-quote?wsdl](http://localhost:8680/stock-quote?wsdl).
 
